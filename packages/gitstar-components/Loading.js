@@ -16,7 +16,13 @@ const defaultOptions = {
 class Loading extends React.Component {
   render() {
     return (
-      <div style={{ position: "relative" }}>
+      <div
+        style={{
+          position: "relative",
+          display: "flex",
+          justifyContent: "center"
+        }}
+      >
         {this.props.status !== STATUS.AUTHENTICATED && (
           <div style={{ position: "absolute" }}>
             <Lottie
