@@ -20,6 +20,14 @@ class App extends Component {
     token: null
   };
   componentDidMount() {
+    const storedToken = localStorage.getItem("github_token");
+    if (storedToken) {
+      this.setState({
+        token: storedToken,
+        status: STATUS.AUTHENTICATED
+      });
+      return;
+    }
     const code =
       window.location.href.match(/\?code=(.*)/) &&
       window.location.href.match(/\?code=(.*)/)[1];
@@ -28,6 +36,7 @@ class App extends Component {
       fetch(`${AUTH_API_URI}${code}`)
         .then(response => response.json())
         .then(({ token }) => {
+          localStorage.setItem("github_token", token);
           this.setState({
             token,
             status: STATUS.FINISHED_LOADING
