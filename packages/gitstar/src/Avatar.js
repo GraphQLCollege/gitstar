@@ -13,13 +13,18 @@ const GET_AVATAR = gql`
 
 class UserAvatar extends React.Component {
   render() {
+    if (!localStorage.getItem("github_token")) {
+      return <Avatar {...this.props} />;
+    }
     return (
       <Query query={GET_AVATAR}>
         {({ loading, error, data }) => {
-          if (loading) return <div>Loading...</div>;
-          if (error) return <div>Error :(</div>;
+          if (loading) return <Avatar {...this.props} />;
+          if (error) {
+            return <div>:(</div>;
+          }
 
-          return <Avatar url={data.viewer.avatarUrl} />;
+          return <Avatar url={data.viewer.avatarUrl} {...this.props} />;
         }}
       </Query>
     );
