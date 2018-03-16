@@ -1,9 +1,9 @@
 {
   "name": "gitstar",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "dependencies": {
-    "gitstar-components": "^1.0.0",
+    "gitstar-components": "^1.0.1",
     "primer": "^10.3.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
