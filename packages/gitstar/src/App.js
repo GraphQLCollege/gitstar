@@ -10,8 +10,9 @@ import {
   Header
 } from "gitstar-components";
 
-const CLIENT_ID = "cdc18a1912950f105f70";
-const REDIRECT_URI = "http://localhost:3000/";
+const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
+const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
+const AUTH_API_URI = process.env.REACT_APP_AUTH_API_URI;
 
 class App extends Component {
   state = {
@@ -24,7 +25,7 @@ class App extends Component {
       window.location.href.match(/\?code=(.*)/)[1];
     if (code) {
       this.setState({ status: STATUS.LOADING });
-      fetch(`https://gitstar.herokuapp.com/authenticate/${code}`)
+      fetch(`${AUTH_API_URI}${code}`)
         .then(response => response.json())
         .then(({ token }) => {
           this.setState({
