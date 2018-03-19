@@ -51,7 +51,9 @@ class App extends Component {
       fetch(`${AUTH_API_URI}${code}`)
         .then(response => response.json())
         .then(({ token }) => {
+          if (token) {
           localStorage.setItem("github_token", token);
+          }
           this.setState({
             status: STATUS.FINISHED_LOADING
           });
