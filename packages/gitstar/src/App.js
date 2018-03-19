@@ -82,7 +82,7 @@ class App extends Component {
                 display:
                   this.state.status === STATUS.INITIAL ? "inline" : "none"
               }}
-              href={`https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=user&redirect_uri=${REDIRECT_URI}`}
+              href={`https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=user%20public_repo%20gist&redirect_uri=${REDIRECT_URI}`}
             >
               Login
             </a>

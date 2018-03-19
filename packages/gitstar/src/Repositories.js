@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { gql } from "apollo-boost";
-import { graphql } from "react-apollo";
+import { graphql, compose } from "react-apollo";
 import {
   Repositories,
   RepositoriesPlaceholder,
@@ -25,7 +25,28 @@ const GET_REPOSITORIES = gql`
           nameWithOwner
           url
           descriptionHTML
+          viewerHasStarred
         }
+      }
+    }
+  }
+`;
+
+const ADD_STAR = gql`
+  mutation($starrableId: ID!) {
+    addStar(input: { starrableId: $starrableId }) {
+      starrable {
+        id
+      }
+    }
+  }
+`;
+
+const REMOVE_STAR = gql`
+  mutation($starrableId: ID!) {
+    removeStar(input: { starrableId: $starrableId }) {
+      starrable {
+        id
       }
     }
   }
@@ -49,7 +70,11 @@ class RepositoriesWrapper extends React.Component {
     if (this.props.loading) {
       return (
         <Fragment>
-          <Repositories repositories={this.props.repositories} />
+          <Repositories
+            repositories={this.props.repositories}
+            addStar={this.props.addStar}
+            removeStar={this.props.removeStar}
+          />
           <RepositoriesPlaceholder />
           <LoadMoreButton loadMore={this.props.loadMore} />
         </Fragment>
@@ -57,41 +82,85 @@ class RepositoriesWrapper extends React.Component {
     }
     return (
       <Fragment>
-        <Repositories repositories={this.props.repositories} />
+        <Repositories
+          repositories={this.props.repositories}
+          addStar={this.props.addStar}
+          removeStar={this.props.removeStar}
+        />
         <LoadMoreButton loadMore={this.props.loadMore} />
       </Fragment>
     );
   }
 }
 
-export default graphql(GET_REPOSITORIES, {
-  props: ({ data: { error, loading, search, fetchMore } }) => {
-    return {
-      repositories: search ? search.nodes : null,
-      loading,
-      error,
-      loadMore: () =>
-        fetchMore({
-          variables: { after: search.pageInfo.endCursor },
-          updateQuery: (previousResult = {}, { fetchMoreResult = {} }) => {
-            const previousSearch = previousResult.search || {};
-            const currentSearch = fetchMoreResult.search || {};
-            const previousNodes = previousSearch.nodes || [];
-            const currentNodes = currentSearch.nodes || [];
-            // Specify how to merge new results with previous results
-            return {
-              ...previousResult,
-              search: {
-                ...previousSearch,
-                nodes: [...previousNodes, ...currentNodes],
-                pageInfo: currentSearch.pageInfo
-              }
-            };
+export default compose(
+  graphql(GET_REPOSITORIES, {
+    props: ({ data: { error, loading, search, fetchMore } }) => {
+      return {
+        repositories: search ? search.nodes : null,
+        loading,
+        error,
+        loadMore: () =>
+          fetchMore({
+            variables: { after: search.pageInfo.endCursor },
+            updateQuery: (previousResult = {}, { fetchMoreResult = {} }) => {
+              const previousSearch = previousResult.search || {};
+              const currentSearch = fetchMoreResult.search || {};
+              const previousNodes = previousSearch.nodes || [];
+              const currentNodes = currentSearch.nodes || [];
+              // Specify how to merge new results with previous results
+              return {
+                ...previousResult,
+                search: {
+                  ...previousSearch,
+                  nodes: [...previousNodes, ...currentNodes],
+                  pageInfo: currentSearch.pageInfo
+                }
+              };
+            }
+          })
+      };
+    },
+    options: {
+      notifyOnNetworkStatusChange: true // Update loading prop after loadMore is called
+    }
+  }),
+  graphql(ADD_STAR, {
+    props: ({ mutate }) => ({
+      addStar: starrableId =>
+        mutate({
+          variables: { starrableId },
+          update: proxy => {
+            proxy.writeFragment({
+              id: `Repository:${starrableId}`,
+              fragment: gql`
+                fragment repository on Repository {
+                  viewerHasStarred
+                }
+              `,
+              data: { viewerHasStarred: true, __typename: "Repository" }
+            });
           }
         })
-    };
-  },
-  options: {
-    notifyOnNetworkStatusChange: true // Update loading prop after loadMore is called
-  }
-})(RepositoriesWrapper);
+    })
+  }),
+  graphql(REMOVE_STAR, {
+    props: ({ mutate }) => ({
+      removeStar: starrableId =>
+        mutate({
+          variables: { starrableId },
+          update: proxy => {
+            proxy.writeFragment({
+              id: `Repository:${starrableId}`,
+              fragment: gql`
+                fragment repository on Repository {
+                  viewerHasStarred
+                }
+              `,
+              data: { viewerHasStarred: false, __typename: "Repository" }
+            });
+          }
+        })
+    })
+  })
+)(RepositoriesWrapper);
