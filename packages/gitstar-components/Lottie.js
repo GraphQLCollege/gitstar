@@ -130,7 +130,7 @@ export default class Lottie extends React.Component {
         ref={c => {
           this.el = c;
         }}
-        style={lottieStyles}
+        style={{ ...this.props.style, ...lottieStyles }}
       />
     );
   }
