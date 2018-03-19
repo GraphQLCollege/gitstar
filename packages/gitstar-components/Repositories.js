@@ -24,7 +24,7 @@ export const RepositoriesPlaceholder = () => (
   </ul>
 );
 
-export const Repositories = ({ repositories }) => (
+export const Repositories = ({ repositories = [] }) => (
   <ul
     style={{
       maxWidth: 900,
