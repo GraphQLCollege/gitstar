@@ -12,6 +12,7 @@ import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 
 import Avatar from "./Avatar";
+import Repositories from "./Repositories";
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
@@ -52,7 +53,7 @@ class App extends Component {
         .then(response => response.json())
         .then(({ token }) => {
           if (token) {
-          localStorage.setItem("github_token", token);
+            localStorage.setItem("github_token", token);
           }
           this.setState({
             status: STATUS.FINISHED_LOADING
@@ -96,6 +97,7 @@ class App extends Component {
               }
             }}
           />
+          {this.state.status === STATUS.AUTHENTICATED && <Repositories />}
         </Container>
       </ApolloProvider>
     );
