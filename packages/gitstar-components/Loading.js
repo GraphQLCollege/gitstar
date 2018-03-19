@@ -20,7 +20,8 @@ class Loading extends React.Component {
         style={{
           position: "relative",
           display: "flex",
-          justifyContent: "center"
+          justifyContent: "center",
+          pointerEvents: "none"
         }}
       >
         {this.props.status !== STATUS.AUTHENTICATED && (
@@ -28,7 +29,7 @@ class Loading extends React.Component {
             <Lottie
               options={{ ...defaultOptions, loop: false }}
               height={400}
-              width={400}
+              width={"100vw"}
               isStopped={this.props.status !== STATUS.FINISHED_LOADING}
               segments={[41, 72]}
               eventListeners={[
@@ -44,7 +45,7 @@ class Loading extends React.Component {
           <Lottie
             options={defaultOptions}
             height={400}
-            width={400}
+            width={"100vw"}
             isStopped={this.props.status !== STATUS.LOADING}
             segments={[0, 41]}
           />
