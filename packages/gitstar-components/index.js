@@ -6,3 +6,4 @@ export { default as Logo } from "./Logo";
 export { default as Logotype } from "./Logotype";
 export { default as STATUS } from "./status";
 export { Repositories, RepositoriesPlaceholder } from "./Repositories";
+export { LoadMoreButton } from "./LoadMoreButton";
