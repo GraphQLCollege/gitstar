@@ -1,5 +1,7 @@
 import React from "react";
 
+import Star from "./Star";
+
 import "./Repositories.css";
 
 export const RepositoriesPlaceholder = () => (
@@ -24,7 +26,7 @@ export const RepositoriesPlaceholder = () => (
   </ul>
 );
 
-export const Repositories = ({ repositories = [] }) => (
+export const Repositories = ({ repositories = [], addStar, removeStar }) => (
   <ul
     style={{
       maxWidth: 900,
@@ -34,16 +36,25 @@ export const Repositories = ({ repositories = [] }) => (
       paddingRight: 18
     }}
   >
-    {repositories.map(({ nameWithOwner, id, descriptionHTML, url }) => (
-      <li key={id} style={{ paddingTop: 24, paddingBottom: 24 }}>
-        <h3>
-          <a href={url}>{nameWithOwner}</a>
-        </h3>
-        <p
-          style={{ width: "75%" }}
-          dangerouslySetInnerHTML={{ __html: descriptionHTML }}
-        />
-      </li>
-    ))}
+    {repositories.map(
+      ({ nameWithOwner, id, descriptionHTML, url, viewerHasStarred }) => (
+        <li key={id} className="repository">
+          <div className="description">
+            <h3>
+              <a href={url}>{nameWithOwner}</a>
+            </h3>
+            <p
+              style={{ width: "75%" }}
+              dangerouslySetInnerHTML={{ __html: descriptionHTML }}
+            />
+          </div>
+          <Star
+            starred={viewerHasStarred}
+            addStar={() => addStar(id)}
+            removeStar={() => removeStar(id)}
+          />
+        </li>
+      )
+    )}
   </ul>
 );

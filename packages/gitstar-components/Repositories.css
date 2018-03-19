@@ -12,23 +12,44 @@
 }
 @keyframes name-pulse {
   0% {
-      background-color: rgba(3, 102, 214, 0.1)
+    background-color: rgba(3, 102, 214, 0.1);
   }
   50% {
-    background-color: rgba(3, 102, 214, 0.3)
+    background-color: rgba(3, 102, 214, 0.3);
   }
   100% {
-    background-color: rgba(3, 102, 214, 0.1)
+    background-color: rgba(3, 102, 214, 0.1);
   }
 }
 @keyframes text-pulse {
   0% {
-      background-color: rgba(165, 165, 165, 0.1)
+    background-color: rgba(165, 165, 165, 0.1);
   }
   50% {
-      background-color: rgba(165, 165, 165, 0.3)
+    background-color: rgba(165, 165, 165, 0.3);
   }
   100% {
-      background-color: rgba(165, 165, 165, 0.1)
+    background-color: rgba(165, 165, 165, 0.1);
   }
+}
+.repository {
+  display: flex;
+  flex-direction: column;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+}
+
+@media (min-width: 426px) {
+  .repository {
+    flex-direction: row;
+  }
+}
+
+.repository .description {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
 }
