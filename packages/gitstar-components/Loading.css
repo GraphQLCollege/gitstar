@@ -1,0 +1,18 @@
+.loading {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.loading > div {
+  height: 400px;
+  width: 400px;
+}
+
+@media (max-width: 400px) {
+  .loading > div {
+    width: 100vw;
+    height: 100vw;
+  }
+}

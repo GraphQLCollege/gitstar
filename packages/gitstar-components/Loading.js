@@ -4,6 +4,8 @@ import Lottie from "./Lottie";
 import STATUS from "./status";
 import * as animationData from "./loading.json";
 
+import "./Loading.css";
+
 const defaultOptions = {
   loop: true,
   autoplay: false,
@@ -16,20 +18,11 @@ const defaultOptions = {
 class Loading extends React.Component {
   render() {
     return (
-      <div
-        style={{
-          position: "relative",
-          display: "flex",
-          justifyContent: "center",
-          pointerEvents: "none"
-        }}
-      >
+      <div className="loading">
         {this.props.status !== STATUS.AUTHENTICATED && (
           <div style={{ position: "absolute" }}>
             <Lottie
               options={{ ...defaultOptions, loop: false }}
-              height={400}
-              width={"100vw"}
               isStopped={this.props.status !== STATUS.FINISHED_LOADING}
               segments={[41, 72]}
               eventListeners={[
@@ -44,8 +37,6 @@ class Loading extends React.Component {
         <div style={{ position: "absolute" }}>
           <Lottie
             options={defaultOptions}
-            height={400}
-            width={"100vw"}
             isStopped={this.props.status !== STATUS.LOADING}
             segments={[0, 41]}
           />
