@@ -3,7 +3,10 @@ import React from "react";
 export const LoadMoreButton = ({ loadMore = () => {} }) => (
   <button
     style={{
-      margin: "0 auto",
+      marginLeft: "auto",
+      marginRight: "auto",
+      marginTop: 24,
+      marginBottom: 24,
       display: "block"
     }}
     className="btn btn-outline"
