@@ -8,7 +8,7 @@
     "graphql": "^0.13.2",
     "primer": "^10.3.0",
     "react": "^16.2.0",
-    "react-apollo": "beta",
+    "react-apollo": "^2.1.0-rc.3",
     "react-dom": "^16.2.0",
     "react-lottie": "^1.0.0",
     "react-scripts": "1.1.1",
