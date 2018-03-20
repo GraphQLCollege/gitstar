@@ -22,7 +22,7 @@ See it live in https://git-star.netlify.com
 
 📄 Pagination
 
-✏️ Star repositories
+⭐ Star repositories
 
 👌 Optimistic updates
 
