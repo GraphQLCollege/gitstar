@@ -149,6 +149,15 @@ export default compose(
       removeStar: starrableId =>
         mutate({
           variables: { starrableId },
+          optimisticResponse: {
+            __typename: "Mutation",
+            removeStar: {
+              starrable: {
+                id: starrableId,
+                __typename: "Repository"
+              }
+            }
+          },
           update: proxy => {
             proxy.writeFragment({
               id: `Repository:${starrableId}`,
