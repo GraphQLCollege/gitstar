@@ -20,7 +20,8 @@ class Star extends React.Component {
       <div
         style={{
           display: "flex",
-          justifyContent: "center"
+          justifyContent: "center",
+          cursor: "pointer"
         }}
         onClick={() => {
           if (this.props.starred) {
