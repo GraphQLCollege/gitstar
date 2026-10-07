@@ -2,8 +2,6 @@
 
 ![GitStar](gitstar.gif)
 
-Read about it in https://www.graphql.college/building-a-github-client-with-react-apollo
-
 See it live in https://git-star.netlify.com
 
 ## Technologies
